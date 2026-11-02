@@ -1,0 +1,7 @@
+{ 
+  "name": "smsb-app",
+  "version": "1.0.0",
+  "main": "smsb.json",
+  "scripts": { "start": "node smsb.js"
+  }
+}
