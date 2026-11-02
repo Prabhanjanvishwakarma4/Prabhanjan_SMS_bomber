@@ -1,10 +1,10 @@
 // ===== 3 GET channels (adibhai-call-smsboomber-api) =====
-const API_CALL     = "https://adibhai-call-smsboomber-api.vercel.app/api/bomb?filter=call";
-const API_WHATSAPP = "https://adibhai-call-smsboomber-api.vercel.app/api/bomb?filter=whatsapp";
-const API_SMS      = "https://adibhai-call-smsboomber-api.vercel.app/api/bomb?filter=sms";
+const API_CALL     = "https://sms-bomber-api-sable.vercel.app/api/bomb?filter=call";
+const API_WHATSAPP = "https://sms-bomber-api-sable.vercel.app/api/bomb?filter=whatsapp";
+const API_SMS      = "https://sms-bomber-api-sable.vercel.app/api/bomb?filter=sms";
 
 // ===== 1 POST channel (original coroauto) =====
-const API_CORO     = "https://coroauto-sms.vercel.app/api/bomb";
+const API_CORO     = "https://sms-bomber-api-sable.vercel.app/api/bomb";
 
 const GET_CHANNELS = {
   call:     API_CALL,
