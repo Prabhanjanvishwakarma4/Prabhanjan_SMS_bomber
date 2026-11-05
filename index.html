@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💀 Prabhanjan Exploits - SMS/Call Bomber</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,0,0,0.03) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: -2;
+        }
+
+        .particle {
+            position: fixed; width: 4px; height: 4px; background: #ff0000;
+            border-radius: 50%; animation: float 6s infinite; opacity: 0.3; z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); opacity: 0.3; }
+            50% { transform: translateY(-100px); opacity: 0.8; }
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        .header { text-align: center; padding: 40px 20px; margin-bottom: 30px; }
+
+        .header h1 {
+            font-size: 3rem; font-weight: 900;
+            background: linear-gradient(45deg, #ff0000, #ff6600, #ff0000, #990000);
+            background-size: 300% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: gradientMove 3s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        .header .subtitle { font-size: 1.2rem; color: #888; letter-spacing: 2px; text-transform: uppercase; }
+
+        .header .badge {
+            display: inline-block; margin-top: 15px; padding: 8px 20px;
+            background: linear-gradient(45deg, #ff000020, #ff000040);
+            border: 1px solid #ff0000; border-radius: 50px;
+            color: #ff4444; font-size: 0.85rem; font-weight: 600;
+        }
+
+        .warning-banner {
+            background: linear-gradient(45deg, rgba(255,0,0,0.1), rgba(255,0,0,0.05));
+            border: 1px dashed #ff0000; border-radius: 15px;
+            padding: 20px; margin-bottom: 30px; text-align: center;
+        }
+
+        .warning-banner i { color: #ff0000; font-size: 1.5rem; margin-right: 10px; }
+        .warning-text { color: #ff8888; font-size: 0.9rem; }
+
+        .main-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 25px; padding: 40px;
+            box-shadow: 0 0 50px rgba(255,0,0,0.1);
+            margin-bottom: 30px;
+            animation: cardGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes cardGlow {
+            0%, 100% { box-shadow: 0 0 50px rgba(255,0,0,0.1); }
+            50% { box-shadow: 0 0 80px rgba(255,0,0,0.3); }
+        }
+
+        .mode-selector { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+
+        .mode-btn {
+            padding: 10px 25px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;
+            color: #888; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;
+        }
+
+        .mode-btn.active { background: rgba(255,0,0,0.2); border-color: #ff0000; color: #ff4444; }
+        .mode-btn:hover { background: rgba(255,0,0,0.1); color: #ff4444; }
+
+        .input-group { margin-bottom: 25px; }
+
+        .input-group label {
+            display: block; font-size: 0.9rem; color: #aaa;
+            margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        .phone-input-wrapper {
+            display: flex; align-items: center; background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,0,0,0.3); border-radius: 15px;
+            overflow: hidden; transition: all 0.3s ease;
+        }
+
+        .phone-input-wrapper:focus-within { border-color: #ff0000; box-shadow: 0 0 20px rgba(255,0,0,0.3); }
+
+        .country-code {
+            padding: 15px 20px; background: rgba(255,0,0,0.1);
+            font-weight: 700; color: #ff4444;
+            border-right: 1px solid rgba(255,0,0,0.3);
+        }
+
+        .phone-input {
+            flex: 1; padding: 15px 20px; background: transparent;
+            border: none; outline: none; color: #fff;
+            font-size: 1.2rem; letter-spacing: 2px;
+        }
+
+        .phone-input::placeholder { color: #555; }
+
+        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            padding: 15px 40px; border: none; border-radius: 15px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .btn-start {
+            background: linear-gradient(45deg, #ff0000, #cc0000); color: white;
+            box-shadow: 0 5px 20px rgba(255,0,0,0.4);
+        }
+
+        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(255,0,0,0.6); }
+
+        .btn-stop { background: linear-gradient(45deg, #333, #555); color: white; }
+
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        .stats-dashboard {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 15px;
+            padding: 20px; text-align: center; transition: all 0.3s ease;
+        }
+
+        .stat-card:hover { border-color: rgba(255,0,0,0.5); transform: translateY(-3px); }
+        .stat-icon { font-size: 2rem; margin-bottom: 10px; }
+        .stat-value { font-size: 2rem; font-weight: 900; margin-bottom: 5px; }
+        .stat-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+        .stat-card.sms .stat-value { color: #ffd700; }
+        .stat-card.calls .stat-value { color: #00ff88; }
+        .stat-card.whatsapp .stat-value { color: #00aaff; }
+        .stat-card.success .stat-value { color: #ff4444; }
+        .stat-card.rate .stat-value { color: #ff8800; }
+        .stat-card.time .stat-value { color: #aa88ff; }
+
+        .destruction-level {
+            text-align: center; padding: 20px; border-radius: 15px;
+            margin-bottom: 30px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .destruction-text { font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; }
+
+        .progress-bar {
+            width: 100%; height: 10px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; overflow: hidden; margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, #ff0000, #ff6600);
+            border-radius: 10px; width: 0%; transition: width 0.5s ease;
+        }
+
+        .console-section {
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 15px; overflow: hidden; margin-bottom: 30px;
+        }
+
+        .console-header {
+            background: rgba(255,255,255,0.03); padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .console-header span { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .console-dots { display: flex; gap: 5px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ff0000; }
+        .dot.yellow { background: #ffd700; }
+        .dot.green { background: #00ff88; }
+
+        .console-body {
+            height: 250px; overflow-y: auto; padding: 15px;
+            font-family: 'Courier New', monospace; font-size: 0.8rem;
+        }
+
+        .console-body::-webkit-scrollbar { width: 5px; }
+        .console-body::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 5px; }
+
+        .log-entry { padding: 3px 0; }
+        .log-success { color: #00ff88; }
+        .log-info { color: #888; }
+        .log-warn { color: #ffd700; }
+
+        .footer { text-align: center; padding: 30px 20px; color: #666; font-size: 0.85rem; }
+        .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+        .status-dot.online { background: #00ff88; animation: blink 1s infinite; }
+        .status-dot.offline { background: #ff0000; }
+
+        @keyframes blink { 50% { opacity: 0.3; } }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            .main-card { padding: 25px; }
+            .btn { padding: 12px 25px; font-size: 0.9rem; }
+            .stats-dashboard { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-skull"></i> PRABHANJAN EXPLOITS <i class="fas fa-skull"></i></h1>
+            <p class="subtitle">Ultimate SMS / Call Bomber</p>
+            <div class="badge">
+                <i class="fas fa-bolt"></i> 90+ APIs | Real Working SMS Delivery
+            </div>
+        </div>
+
+        <div class="warning-banner">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span class="warning-text"><strong>WARNING:</strong> This tool sends real SMS/Calls. Use responsibly!</span>
+        </div>
+
+        <div class="main-card">
+            <div style="text-align:center; margin-bottom:20px; font-size:0.9rem;">
+                <span class="status-dot offline" id="serverDot"></span>
+                <span id="serverStatus">Checking server...</span>
+            </div>
+
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="all"><i class="fas fa-bomb"></i> ALL</button>
+                <button class="mode-btn" data-mode="sms"><i class="fas fa-comment"></i> SMS ONLY</button>
+                <button class="mode-btn" data-mode="call"><i class="fas fa-phone"></i> CALLS</button>
+                <button class="mode-btn" data-mode="whatsapp"><i class="fab fa-whatsapp"></i> WHATSAPP</button>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-crosshairs"></i> Target Number</label>
+                <div class="phone-input-wrapper">
+                    <span class="country-code">+91</span>
+                    <input type="text" class="phone-input" id="phoneInput" placeholder="Enter 10-digit number..." maxlength="10" inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-start" id="startBtn" onclick="startBomber()">
+                    <i class="fas fa-rocket"></i> START DESTRUCTION
+                </button>
+                <button class="btn btn-stop" id="stopBtn" onclick="stopBomber()" disabled>
+                    <i class="fas fa-stop"></i> STOP
+                </button>
+            </div>
+        </div>
+
+        <div class="stats-dashboard" id="statsDashboard" style="display:none;">
+            <div class="stat-card sms"><div class="stat-icon"><i class="fas fa-comments"></i></div><div class="stat-value" id="statSms">0</div><div class="stat-label">SMS Requests</div></div>
+            <div class="stat-card calls"><div class="stat-icon"><i class="fas fa-phone-alt"></i></div><div class="stat-value" id="statCalls">0</div><div class="stat-label">Call Requests</div></div>
+            <div class="stat-card whatsapp"><div class="stat-icon"><i class="fab fa-whatsapp"></i></div><div class="stat-value" id="statWhatsapp">0</div><div class="stat-label">WhatsApp</div></div>
+            <div class="stat-card success"><div class="stat-icon"><i class="fas fa-bullseye"></i></div><div class="stat-value" id="statSuccess">0</div><div class="stat-label">Successful Hits</div></div>
+            <div class="stat-card rate"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-value" id="statRate">0%</div><div class="stat-label">Success Rate</div></div>
+            <div class="stat-card time"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-value" id="statTime">0s</div><div class="stat-label">Time Elapsed</div></div>
+        </div>
+
+        <div class="destruction-level" id="destructionLevel" style="display:none;">
+            <div class="destruction-text" id="destructionText">⏳ PREPARING ATTACK...</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="console-section" id="consoleSection" style="display:none;">
+            <div class="console-header">
+                <div class="console-dots">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                </div>
+                <span>Live Attack Console - Backend Connected</span>
+            </div>
+            <div class="console-body" id="consoleBody"></div>
+        </div>
+
+        <div class="footer">
+            <p><i class="fas fa-code"></i> Developed by <strong style="color:#ff4444;">Prabhanjan_Exploits</strong></p>
+            <p style="margin-top:5px;"><i class="fas fa-server"></i> Server-side bombing - No CORS issues!</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = ''; // Same server pe hai
+
+        let selectedMode = "all";
+        let statsTimer = null;
+        let lastLogCount = 0;
+
+        // Particles banao
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 6 + 's';
+            document.body.appendChild(p);
+        }
+
+        // Mode selection
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedMode = this.dataset.mode;
+            });
+        });
+
+        // Phone input validation
+        document.getElementById('phoneInput').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') startBomber();
+        });
+
+        // Server health check
+        async function checkServer() {
+            const dot = document.getElementById('serverDot');
+            const status = document.getElementById('serverStatus');
+            try {
+                const res = await fetch(API_BASE + '/stats');
+                if (res.ok) {
+                    dot.className = 'status-dot online';
+                    status.innerHTML = 'Server <strong style="color:#00ff88">ONLINE</strong> | Ready to destroy';
+                }
+            } catch (e) {
+                dot.className = 'status-dot offline';
+                status.innerHTML = 'Server <strong style="color:#ff4444">OFFLINE</strong> | Run: <code>python app.py</code>';
+            }
+        }
+
+        function addLog(message, type = 'info') {
+            // Server se aane wale logs process second me hain
+        }
+
+        // Rendering server stats
+        function renderStats(data) {
+            document.getElementById('statSms').textContent = data.sms_sent;
+            document.getElementById('statCalls').textContent = data.calls_sent;
+            document.getElementById('statWhatsapp').textContent = data.whatsapp_sent;
+            document.getElementById('statSuccess').textContent = data.successful_hits;
+            document.getElementById('statRate').textContent = data.success_rate + '%';
+            document.getElementById('statTime').textContent = data.elapsed + 's';
+
+            // Destruction level
+            const dt = document.getElementById('destructionText');
+            const pf = document.getElementById('progressFill');
+            pf.style.width = Math.min((data.successful_hits / 100) * 100, 100) + '%';
+
+            if (data.successful_hits > 100) { dt.innerHTML = '☠️ PHONE COMPLETELY DESTROYED! ☠️'; dt.style.color = '#ff0000'; }
+            else if (data.successful_hits > 50) { dt.innerHTML = '🔥 PHONE HANGING! 🔥'; dt.style.color = '#ff6600'; }
+            else if (data.successful_hits > 20) { dt.innerHTML = '⚡ PHONE SLOWING! ⚡'; dt.style.color = '#ffd700'; }
+            else if (data.successful_hits > 0) { dt.innerHTML = '🎯 BOMBING IN PROGRESS! 🎯'; dt.style.color = '#00ff88'; }
+            else { dt.innerHTML = '⏳ PREPARING ATTACK... ⏳'; dt.style.color = '#888'; }
+
+            // Logs render karo (sirf naye)
+            const consoleBody = document.getElementById('consoleBody');
+            if (data.logs.length !== lastLogCount) {
+                consoleBody.innerHTML = data.logs.map(log => {
+                    let cls = 'log-info';
+                    if (log.includes('HIT:')) cls = 'log-success';
+                    else if (log.includes('STARTED') || log.includes('STOPPED')) cls = 'log-warn';
+                    return `<div class="log-entry ${cls}">${log}</div>`;
+                }).join('');
+                consoleBody.scrollTop = consoleBody.scrollHeight;
+                lastLogCount = data.logs.length;
+            }
+
+            // Agar server ruk gaya
+            if (!data.running && statsTimer) {
+                clearInterval(statsTimer);
+                statsTimer = null;
+                resetButtons();
+            }
+        }
+
+        async function pollStats() {
+            try {
+                const res = await fetch(API_BASE + '/stats');
+                const data = await res.json();
+                renderStats(data);
+            } catch (e) { /* ignore */ }
+        }
+
+        function resetButtons() {
+            const startBtn = document.getElementById('startBtn');
+            startBtn.disabled = false;
+            startBtn.innerHTML = '<i class="fas fa-rocket"></i> START DESTRUCTION';
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        async function startBomber() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            if (!phone || phone.length !== 10) {
+                alert('⚠️ Please enter a valid 10-digit phone number!');
+                return;
+            }
+
+            try {
+                const res = await fetch(API_BASE + '/start', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({phone: phone, mode: selectedMode})
+                });
+                const data = await res.json();
+
+                if (data.status === 'error') {
+                    alert('❌ ' + data.message);
+                    return;
+                }
+
+                // UI show karo
+                document.getElementById('statsDashboard').style.display = 'grid';
+                document.getElementById('destructionLevel').style.display = 'block';
+                document.getElementById('consoleSection').style.display = 'block';
+
+                const startBtn = document.getElementById('startBtn');
+                startBtn.disabled = true;
+                startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ATTACKING...';
+                document.getElementById('stopBtn').disabled = false;
+
+                // Stats polling start
+                if (statsTimer) clearInterval(statsTimer);
+                statsTimer = setInterval(pollStats, 1000);
+
+            } catch (e) {
+                alert('❌ Server offline! Pehle "python app.py" run karo.');
+            }
+        }
+
+        async function stopBomber() {
+            await fetch(API_BASE + '/stop', {method: 'POST'});
+            if (statsTimer) {
+                clearInterval(statsTimer);
+                statsTimer = null;
+            }
+            resetButtons();
+        }
+
+        // Initialize
+        checkServer();
+        setInterval(checkServer, 10000);
+    </script>
+</body>
+</html>
